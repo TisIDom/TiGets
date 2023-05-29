@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tigets.Infrastructure.Data;
 
@@ -11,9 +12,10 @@ using Tigets.Infrastructure.Data;
 namespace Tigets.Infrastructure.Migrations
 {
     [DbContext(typeof(TigetsContext))]
-    partial class TigetsContextModelSnapshot : ModelSnapshot
+    [Migration("20230527193137_AddAdmin2")]
+    partial class AddAdmin2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -333,9 +335,6 @@ namespace Tigets.Infrastructure.Migrations
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("isVerified")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

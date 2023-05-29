@@ -15,5 +15,7 @@ namespace Tigets.Infrastructure.Data
         public DbSet<Ticket> Tickets { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
         public DbSet<Event> Events { get; set; }
+
+        public DbSet<Admin> Admins { get; set; }
     }
 }

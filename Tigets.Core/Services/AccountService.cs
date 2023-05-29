@@ -9,19 +9,25 @@ namespace Tigets.Core.Services
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly UserManager<Admin> _adminManager;
         private readonly IMapper _mapper;
         private readonly Lazy<Reading> _reading;
+        private readonly SignInManager<Admin> _signInManagerAdmin;
 
         public AccountService(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
-            IMapper mapper
+            IMapper mapper,
+            UserManager<Admin> adminManager,
+            SignInManager<Admin> signInManagerAdmin
         )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
             _reading = new Lazy<Reading>();
+            _adminManager = adminManager;
+            _signInManagerAdmin = signInManagerAdmin;
         }
 
         public async Task AddBalance(string username, decimal amount)
@@ -48,8 +54,20 @@ namespace Tigets.Core.Services
 
             var user = await _userManager.FindByNameAsync(username);
 
-            if (user is null)
-                throw new Exception("User does not exist.");
+            if (user is null){
+                var admin = await _adminManager.FindByNameAsync(username);
+                if (admin is null)
+                    throw new Exception("User does not exist.");
+                else{
+                    if (!await _adminManager.CheckPasswordAsync(admin, password))
+                        throw new Exception("Incorrect password.");
+
+                    var results = await _signInManagerAdmin.PasswordSignInAsync(admin, password, false, false);
+                    if (!results.Succeeded)
+                        throw new Exception("Failed to sign in.");
+                    return;
+                }
+            }
 
             if (!await _userManager.CheckPasswordAsync(user, password))
                 throw new Exception("Incorrect password.");

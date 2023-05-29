@@ -15,23 +15,21 @@ namespace Tigets.Api.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IAccountService _accountService;
+        private readonly IAdminService _adminService;
 
-        public AdminController(IMapper mapper, IAccountService accountService)
+        public AdminController(IMapper mapper, IAccountService accountService, IAdminService adminService)
         {
             _mapper = mapper;
             _accountService = accountService;
+            _adminService = adminService;
         }
 
         [Authorize]
         [HttpPost("VerifyUser")]
         public async Task<IActionResult> VerifyUser(string username)
         {
-            UserViewModel user;
             var name = User.Identity?.Name ?? throw new Exception("User does not exist");
-            user = await _accountService.GetProfileData(username: name);
-
-            if (user.UserName != "Admin")
-                return BadRequest("User is not an admin");
+            Admin admin = await _adminService.GetProfileData(username: name);
 
             try
             {

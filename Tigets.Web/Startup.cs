@@ -31,6 +31,11 @@ namespace Tigets.Web
 
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IEventRepository, EventRepository>();
+            services.AddScoped<IAdminService, AdminService>();
+            services.AddIdentity<Admin, IdentityRole>()
+            .AddEntityFrameworkStores<TigetsContext>()
+            ;
+
 
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
