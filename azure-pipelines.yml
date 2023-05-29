@@ -33,6 +33,9 @@ steps:
     testSelector: 'testAssemblies'
     testAssemblyVer2: |
       $(System.DefaultWorkingDirectory)\Tests\**\bin\**\*.test.dll
+      obj\Release\net6.0\*.Tests.dll
+      obj\Release\net6.0\refint\*.Tests.dll
+      D:\a\1\s\Tigets.Tests\bin\Release\net6.0\Tigets.Tests.dll
       **\*test.dll
       !**\*TestAdapter.dll
       !**\obj\**
