@@ -38,6 +38,13 @@ steps:
       !**\obj\**
     codeCoverageEnabled: true
 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**\*.trx'
+    mergeTestResults: true
+    failTaskOnFailedTests: true
+
 - task: DotNetCoreCLI@2
   inputs:
     command: publish
