@@ -44,8 +44,7 @@ steps:
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'VSTest'
-    testResultsFiles: '**\*.trx'
-    searchFolder: '$(System.DefaultWorkingDirectory)'
+    testResultsFiles: 'D:\a\_temp\TestResults\*.trx'
     mergeTestResults: true
     failTaskOnFailedTests: true
 
